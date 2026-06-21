@@ -93,6 +93,125 @@
   #overlay button:hover { background: #6b57f0; transform: scale(1.04); }
   #overlay button:active { transform: scale(0.97); }
   .hidden { display: none !important; }
+
+  #footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px 10px;
+    background: rgba(255,255,255,0.03);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    flex-shrink: 0;
+    gap: 10px;
+  }
+  #footer a img { display: block; border-radius: 7px; }
+  #howto-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(124,106,247,0.18);
+    border: 1px solid rgba(124,106,247,0.35);
+    color: #c4b9ff;
+    border-radius: 50px;
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+  }
+  #howto-btn:hover { background: rgba(124,106,247,0.32); transform: scale(1.03); }
+  #howto-btn svg { flex-shrink: 0; }
+
+  #howto-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,30,0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    backdrop-filter: blur(8px);
+    padding: 20px;
+  }
+  #howto-panel {
+    background: #1e2147;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 28px 24px;
+    max-width: 360px;
+    width: 100%;
+    position: relative;
+  }
+  #howto-panel h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #e2e8f0;
+    margin-bottom: 18px;
+    text-align: center;
+    letter-spacing: -0.5px;
+  }
+  .howto-step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .howto-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: rgba(124,106,247,0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .howto-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin-bottom: 2px;
+  }
+  .howto-text span {
+    font-size: 12px;
+    color: #a0aec0;
+    line-height: 1.5;
+  }
+  .howto-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 16px 0;
+  }
+  .howto-scoring {
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+  .howto-scoring p {
+    font-size: 12px;
+    color: #a0aec0;
+    line-height: 1.8;
+  }
+  .howto-scoring p span { color: #7c6af7; font-weight: 700; }
+  #howto-close {
+    width: 100%;
+    padding: 12px;
+    background: #7c6af7;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  #howto-close:hover { background: #6b57f0; transform: scale(1.02); }
 </style>
 </head>
 <body>
@@ -112,10 +231,65 @@
   <canvas id="gameCanvas"></canvas>
 </div>
 
-<div id="badge" style="position:fixed;bottom:12px;right:12px;z-index:50;opacity:0.9;">
+<footer id="footer">
   <a href="https://orynth.dev/projects/block-puzzle-game" target="_blank" rel="noopener">
-    <img src="https://orynth.dev/api/badge/block-puzzle-game?theme=light&style=default" alt="Featured on Orynth" width="130" height="40" style="border-radius:8px;display:block;" />
+    <img src="https://orynth.dev/api/badge/block-puzzle-game?theme=dark&style=default" alt="Featured on Orynth" width="120" height="36" />
   </a>
+  <button id="howto-btn">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    How to Play
+  </button>
+</footer>
+
+<div id="howto-overlay" class="hidden">
+  <div id="howto-panel">
+    <h2>🧩 How to Play</h2>
+
+    <div class="howto-step">
+      <div class="howto-icon">👆</div>
+      <div class="howto-text">
+        <strong>Drag & Drop</strong>
+        <span>Drag a block from the tray at the bottom and drop it anywhere on the 8×8 grid.</span>
+      </div>
+    </div>
+
+    <div class="howto-step">
+      <div class="howto-icon">🟦</div>
+      <div class="howto-text">
+        <strong>Fill the Lines</strong>
+        <span>Complete a full horizontal row or vertical column to clear it and earn bonus points.</span>
+      </div>
+    </div>
+
+    <div class="howto-step">
+      <div class="howto-icon">💥</div>
+      <div class="howto-text">
+        <strong>Combo Bonus</strong>
+        <span>Clear multiple lines at once for a big combo bonus — the more lines, the bigger the reward!</span>
+      </div>
+    </div>
+
+    <div class="howto-step">
+      <div class="howto-icon">🔄</div>
+      <div class="howto-text">
+        <strong>New Blocks</strong>
+        <span>Once all 3 blocks in the tray are placed, 3 fresh random blocks will appear.</span>
+      </div>
+    </div>
+
+    <hr class="howto-divider">
+
+    <div class="howto-scoring">
+      <p>
+        <span>+tiles</span> per block placed &nbsp;·&nbsp;
+        <span>+10</span> per line cleared<br>
+        <span>+20×</span> combo bonus for each extra line<br>
+        <span>🏆</span> High score saved automatically
+      </p>
+    </div>
+
+    <button id="howto-close">Got it — Let's Play!</button>
+  </div>
 </div>
 
 <div id="overlay" class="hidden">
@@ -192,7 +366,8 @@ function resize() {
   const vh = window.innerHeight;
   const vw = window.innerWidth;
   const headerH = document.getElementById('header').offsetHeight;
-  const avail = Math.min(vw, vh - headerH - 10);
+  const footerH = document.getElementById('footer').offsetHeight;
+  const avail = Math.min(vw, vh - headerH - footerH - 10);
   const maxCS = Math.floor(avail * 0.085);
   cellSize = Math.max(28, Math.min(52, maxCS));
 
@@ -681,6 +856,17 @@ document.getElementById('restartBtn').addEventListener('click', () => {
   document.getElementById('overlay').classList.add('hidden');
   initState();
   gameOver = false;
+});
+
+document.getElementById('howto-btn').addEventListener('click', () => {
+  document.getElementById('howto-overlay').classList.remove('hidden');
+});
+document.getElementById('howto-close').addEventListener('click', () => {
+  document.getElementById('howto-overlay').classList.add('hidden');
+});
+document.getElementById('howto-overlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('howto-overlay'))
+    document.getElementById('howto-overlay').classList.add('hidden');
 });
 
 // ─────────────────────────────────────────────
